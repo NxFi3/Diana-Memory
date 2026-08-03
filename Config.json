@@ -1,0 +1,8 @@
+{
+  "LLM": "gemma4:e4b",
+  "encoder": "intfloat/multilingual-e5-base",
+  "reranker": "BAAI/bge-reranker-v2-m3",
+  "LTM_DATABASE_PATH": "Long_Term_Memory.db",
+  "STM_SIZE": 100,
+  "STM_PATH": "STM_memory.pkl"
+}
