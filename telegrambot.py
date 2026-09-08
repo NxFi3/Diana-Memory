@@ -5,7 +5,11 @@ import socket
 import re
 from Memory.Memorycontroller import MemoryController
 
+<<<<<<< HEAD
 TOKEN = "your telegram token here"
+=======
+TOKEN = "YOUR_TELEGRAMBOT_TOKEN_HERE"
+>>>>>>> d52c1d6 (Upload)
 
 
 socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", 10808)
