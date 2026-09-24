@@ -24,7 +24,7 @@ MemoryController
       |      +-- embedding similarity
       |      +-- RRF-style fusion
       |      +-- MMR diversity selection
-      |      +-- graph-neighbor expansion
+      |      +-- graph association metadata
       |      +-- importance / recency / frequency ranking
       |      +-- CrossEncoder reranking
       |
@@ -47,7 +47,7 @@ LTM items are stored in SQLite with:
 - memory value
 - memory type
 - embedding
-- optional graph connections
+- optional graph associations
 - creation time
 - last-access time
 - access count
@@ -68,7 +68,7 @@ The save path includes:
 4. Very-high similarity duplicate merging.
 5. LLM-assisted merging for close candidates.
 6. A surprise/usefulness score for deciding whether novel information should be stored.
-7. Optional graph association with nearby memories.
+7. Optional association with nearby memories.
 8. SQLite + FTS5 persistence.
 
 The current implementation uses a strict semantic duplicate threshold around `0.989` and an LLM merge path above `0.96`.
@@ -103,7 +103,7 @@ Query
                       top-k
 ~~~
 
-The lexical and semantic stages are complementary, but the current implementation is lightweight: lexical retrieval narrows candidates and the later semantic stages operate on the resulting set rather than maintaining two completely independent ranking pipelines.
+The lexical and semantic stages are complementary, but the current implementation is lightweight: lexical retrieval narrows candidates and later semantic ranking operates on that candidate set rather than maintaining two completely independent ranking pipelines. Saved graph IDs currently represent associations; the active normal retrieval path does not yet traverse those stored edges as a separate graph-walk stage.
 
 ## Short-Term Memory
 
@@ -237,7 +237,7 @@ Diana-Memory was built around a few practical goals:
 This repository is still a research/engineering prototype. In particular:
 
 - LTM semantic retrieval currently works from a candidate set rather than a fully independent semantic ranking pipeline.
-- Graph storage is represented as arrays of related memory IDs rather than a dedicated graph database.
+- Graph storage is represented as arrays of related memory IDs rather than a dedicated graph database, and graph traversal is not yet implemented in the normal retrieval path.
 - User isolation is primarily expressed in the prompt/context flow; the LTM schema does not currently enforce a per-user namespace.
 - Memory decision parsing relies on LLM-generated JSON plus fallback parsing.
 - There is no dedicated dependency lockfile or automated test suite in the repository yet.
